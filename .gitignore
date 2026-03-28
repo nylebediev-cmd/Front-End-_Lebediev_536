@@ -1,0 +1,14 @@
+# PyCharm files
+.idea/
+cmake-build-*/
+venv/
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
+Thumbs.db
+
+# OS temporary files
+*.tmp
+*.log
