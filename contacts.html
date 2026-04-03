@@ -4,33 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Контактна інформація">
-    <meta name="author" content="Твоє Ім'я">
+    <meta name="author" content="Нікіта">
     <title>Контакти — Портфоліо</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+    <header id="main-header">
         <h1>Зв'яжіться зі мною</h1>
-        <nav>
-            <ul>
+        <nav class="main-nav">
+            <ul class="menu">
                 <li><a href="index.html">Головна</a></li>
                 <li><a href="about.html">Про мене</a></li>
-                <li><strong>Контакти</strong></li>
+                <li><strong class="active">Контакти</strong></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section>
-            <h2>Контактні дані</h2>
-            <p>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-            <p>Телефон: <a href="tel:+380000000000">+38 (000) 000-00-00</a></p>
+        <section class="card">
+            <h2 class="section-title">Контактні дані</h2>
+            <div class="contact-info">
+                <p><strong>Email:</strong> <a href="mailto:your-email@example.com">your-email@example.com</a></p>
+                <p><strong>Телефон:</strong> <a href="tel:+380000000000">+38 (000) 000-00-00</a></p>
+            </div>
 
-            <form action="#" method="post">
+            <form action="#" method="post" class="contact-form">
                 <fieldset>
                     <legend>Контактна інформація</legend>
                     <label for="name">Ім'я:</label>
                     <input type="text" id="name" name="name" placeholder="Введіть ваше ім'я" required>
-                    <br><br>
+
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" placeholder="email@example.com" required>
                 </fieldset>
@@ -45,31 +51,33 @@
                         <option value="feedback">Відгук</option>
                     </select>
 
-                    <p>Тип звернення:</p>
-                    <label>
-                        <input type="radio" name="type" value="question" required checked> Питання
-                    </label>
-                    <label>
-                        <input type="radio" name="type" value="suggestion"> Пропозиція
-                    </label>
+                    <p class="radio-title">Тип звернення:</p>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="type" value="question" required checked> Питання
+                        </label>
+                        <label>
+                            <input type="radio" name="type" value="suggestion"> Пропозиція
+                        </label>
+                    </div>
 
-                    <br><br>
-                    <label for="message">Повідомлення:</label><br>
+                    <label for="message">Повідомлення:</label>
                     <textarea id="message" name="message" rows="5" placeholder="Ваше повідомлення"></textarea>
                 </fieldset>
 
-                <br>
-                <label>
-                    <input type="checkbox" name="consent" required>
-                    Я погоджуюсь на обробку персональних даних
-                </label>
-                <br><br>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="consent" required>
+                        Я погоджуюсь на обробку персональних даних
+                    </label>
+                </div>
+
                 <button type="submit">Надіслати</button>
             </form>
         </section>
     </main>
 
-    <footer>
+    <footer id="main-footer">
         <p>&copy; 2026 Лебедєв. Всі права захищені.</p>
     </footer>
 </body>
