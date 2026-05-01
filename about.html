@@ -6,31 +6,38 @@
     <meta name="description" content="Детальна інформація про автора">
     <meta name="author" content="Нікіта">
     <title>Про мене — Портфоліо</title>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page">
     <header id="main-header">
         <h1>Про мене</h1>
         <nav class="main-nav">
+            <input type="checkbox" id="menu-toggle-about" class="menu-toggle">
+            <label for="menu-toggle-about" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
             <ul class="menu">
                 <li><a href="index.html">Головна</a></li>
-                <li><strong>Про мене</strong></li>
+                <li><strong class="active">Про мене</strong></li>
                 <li><a href="contacts.html">Контакти</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="hero" class="card">
+        <section class="card">
             <h2 class="section-title">Освіта та досвід</h2>
             <p class="section-aftertitle">Наразі я навчаюся в університеті, де опановую сучасні інформаційні технології.</p>
 
             <h3 class="section-aftertitle">Мої технічні навички</h3>
             <table border="1">
-                <caption >Таблиця моїх знань</caption>
+                <caption>Таблиця моїх знань</caption>
                 <thead>
                     <tr>
                         <th>Технологія</th>
@@ -40,12 +47,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>HTML5<img src="images/photo2.webp" alt="Logo_HTML" width="30"></td>
-                        <td>Вище середньго </td>
+                        <td>HTML5 <img src="images/photo2.webp" alt="Logo_HTML" width="30" style="display:inline; vertical-align:middle;"></td>
+                        <td>Вище середнього</td>
                         <td>2 роки</td>
                     </tr>
                     <tr>
-                        <td>Python/PyCharm<img src="images/photo3.png" alt="Logo_Python" width="30"></td>
+                        <td>Python / PyCharm <img src="images/photo3.png" alt="Logo_Python" width="30" style="display:inline; vertical-align:middle;"></td>
                         <td>Середній</td>
                         <td>1.5 роки</td>
                     </tr>
@@ -60,13 +67,13 @@
             </dl>
         </section>
 
-        <aside id="hero" class="card">
+        <aside class="card">
             <h4 class="section-aftertitle">Цікавий факт</h4>
             <p class="volleyball">Граю у професійній волейбольній лізі</p>
         </aside>
 
-        <section id="hero" class="card">
-            <h3 >Відео-презентація</h3>
+        <section class="card">
+            <h3>Відео-презентація</h3>
             <video id="myVideo" class="video-about" autoplay muted loop playsinline>
                 <source src="videos/intro1.mp4" type="video/mp4">
                 Ваш браузер не підтримує відео.
@@ -77,5 +84,7 @@
     <footer id="main-footer">
         <p>&copy; 2026 Лебедєв. Всі права захищені.</p>
     </footer>
+
+    <a href="#main-header" class="btn-up" title="Нагору">↑</a>
 </body>
 </html>

@@ -1,133 +1,257 @@
+:root {
+    --color-primary: #4A90E2;
+    --color-secondary: #357ABD;
+    --color-bg: hsl(220, 20%, 97%);
+    --color-surface: #ffffff;
+    --color-text: #333333;
+    --color-text-muted: #666666;
+    --color-accent: #FF6B6B;
+    --color-border: #e0e0e0;
 
+    --font-main: 'Poppins', Arial, sans-serif;
+    --font-heading: 'Georgia', serif;
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 4rem;
+
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+}
+
+/* Базовые настройки */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', Arial, sans-serif;
-    background-color: hsl(220, 20%, 97%);
-    color: rgb(51, 51, 51);
+    font-family: var(--font-main);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     line-height: 1.6;
     padding-top: 80px;
+    font-size: clamp(0.95rem, 1.5vw, 1.125rem);
 }
 
+h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h2, .section-title, .section-aftertitle { font-size: clamp(1.25rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+
+/* --- АНИМАЦИИ (Keyframes) --- */
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes growLine {
+    from { width: 0; }
+    to { width: 60px; }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(74, 144, 226, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0); }
+}
+
+/* Сетка страницы */
+.page {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "content"
+        "sidebar"
+        "footer";
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    min-height: 100vh;
+}
+
+#main-header { grid-area: header; }
+main { grid-area: content; }
+aside { grid-area: sidebar; }
+#main-footer { grid-area: footer; }
+
+/* Шапка */
 #main-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 5%;
+    padding: var(--spacing-md) 5%;
+    animation: slideDown 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 #main-header h1 {
-    font-size: 1.5rem;
     margin: 0;
-    color: #4A90E2;
+    color: var(--color-primary);
 }
 
-.main-nav > .menu {
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 30px;
+    height: 3px;
+    background-color: var(--color-text);
+    transition: all var(--transition-speed) ease;
+}
+
+.menu {
     list-style: none;
     margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 1.5rem;
+    padding: var(--spacing-lg);
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    position: absolute;
+    top: 70px;
+    right: 5%;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
 }
 
-.menu li a:link,
-.menu li a:visited {
+.menu-toggle:checked ~ .menu {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.menu li a,
+.menu li strong {
     text-decoration: none;
-    color: rgb(85, 85, 85);
+    color: var(--color-text-muted);
     font-weight: 600;
-    padding: 0.5rem 1rem;
+    padding: var(--spacing-sm) var(--spacing-md);
     border-radius: 5px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
+    display: block;
+    text-align: center;
+    border-bottom: 2px solid transparent;
 }
 
 .menu li a:hover {
-    background-color: #4A90E2;
-    color: #ffffff;
-}
-
-.menu li a:active {
-    background-color: #357ABD;
-    transform: scale(0.95);
-}
-
-.menu li a:focus {
-    outline: 2px dashed #4A90E2;
-    outline-offset: 4px;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    transform: translateX(5px);
 }
 
 .menu li strong.active {
-    padding: 0.5rem 1rem;
-    color: #4A90E2;
-    border-bottom: 2px solid #4A90E2;
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    border-radius: 0;
 }
 
+/* Карточки */
 .card {
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     max-width: 800px;
-    margin: 2rem auto;
-    padding: 2.5rem;
-    border-radius: 12px;
+    margin: var(--spacing-lg) auto;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow var(--transition-speed) ease;
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовки с анимацией линии */
 .section-title {
-    font-size: 2.2rem;
-    color: #333333;
+    color: var(--color-text);
     position: relative;
-    margin-bottom: 1.5rem;
-}
-
-.section-aftertitle{
-    font-size: 2rem;
-    color: #333333;
-    position: relative;
-    margin-bottom: 1.5rem;
-    text-align: center;
+    margin-bottom: var(--spacing-md);
 }
 
 .section-title::after {
     content: "";
     display: block;
-    width: 60px;
+    width: 0; /* Начало для анимации */
     height: 4px;
-    background-color: #4A90E2;
+    background-color: var(--color-primary);
     margin-top: 10px;
     border-radius: 2px;
+    animation: growLine 1s ease-out 0.5s forwards;
 }
 
+/* Волейбол (стиль для текста с мячами) */
+.volleyball-text {
+    text-align: center;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.volleyball-text::before,
+.volleyball-text::after {
+    content: "🏐";
+    font-size: 1.5rem;
+}
+
+.section-aftertitle {
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+/* Цитаты и списки */
 .quote {
     position: relative;
-    font-size: 1.2rem;
     font-style: italic;
-    color: #666666;
+    color: var(--color-text-muted);
     padding: 1.5rem 2rem;
-    margin: 2rem 0;
+    margin: var(--spacing-lg) 0;
     background-color: hsl(220, 30%, 95%);
-    border-left: 5px solid #4A90E2;
+    border-left: 5px solid var(--color-primary);
     border-radius: 0 8px 8px 0;
+    transition: background-color 0.3s ease;
 }
 
-.quote::before {
-    content: '"';
-    font-size: 4rem;
-    color: rgba(74, 144, 226, 0.2);
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    font-family: serif;
+.quote:hover {
+    background-color: hsl(220, 30%, 92%);
 }
 
 .goals-list {
@@ -138,7 +262,12 @@ body {
 .goals-list li {
     position: relative;
     padding-left: 1.5rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: var(--spacing-sm);
+    transition: transform 0.2s ease;
+}
+
+.goals-list li:hover {
+    transform: translateX(10px);
 }
 
 .goals-list li::before {
@@ -147,170 +276,131 @@ body {
     left: 0;
     top: 0;
 }
-.volleyball {
-    text-align: center;
-    font-size: 2.1rem;
-    color: #333333;
-}
 
-.volleyball::before {
-    content: "🏐 ";
-}
-
-.volleyball::after {
-    content: " 🏐";
-}
-.image-wrapper figure {
-    position: relative;
-    margin: 2rem 0;
-    display: inline-block;
-}
-
-.image-wrapper img {
-    border-radius: 12px;
-    border: 4px solid #ffffff;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+/* Медиа (Фото/Видео) */
+img, video {
+    max-width: 100%;
+    height: auto;
     display: block;
+    transition: transform 0.5s ease;
 }
 
 .image-wrapper {
     overflow: hidden;
     text-align: center;
+    border-radius: var(--border-radius);
+    position: relative; /* Для позиционирования бейджа */
 }
 
+.image-wrapper figure {
+    position: relative;
+    margin: var(--spacing-lg) 0;
+    display: inline-block;
+}
+
+.image-wrapper img {
+    border-radius: var(--border-radius);
+    border: 4px solid var(--color-surface);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.image-wrapper img:hover {
+    transform: scale(1.05);
+}
+
+/* Исправленный бейдж "Новичок" */
 .badge {
     position: absolute;
     top: 15px;
     right: 15px;
-    background-color: #FF6B6B;
+    background-color: var(--color-accent);
     color: white;
     padding: 0.3rem 0.8rem;
     font-size: 0.8rem;
     font-weight: bold;
     border-radius: 20px;
     z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-figure figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #777777;
-}
-
+/* Таблицы */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 2rem 0;
-}
-.video-about{
- width: 100%;
-    max-width: 700px;
-    display: block;
-    margin: 2rem auto;
-    border-radius: 16px;
-    border: 4px solid #ffffff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.video-about:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
-.facts-list {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 1rem 2rem;
-
-    background-color: hsl(220, 30%, 98%);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid #4A90E2;
-    margin-top: 1rem;
-}
-
-.facts-list dt {
-    font-weight: 600;
-    color: #4A90E2;
-    position: relative;
-}
-
-.facts-list dd {
-    margin: 0;
-    color: #555555;
-    line-height: 1.6;
+    margin: var(--spacing-lg) 0;
 }
 
 th, td {
-    padding: 1rem;
-    border: 1px solid #e0e0e0;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
     text-align: left;
 }
 
 th {
-    background-color: #4A90E2;
-    color: #ffffff;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
     font-weight: 600;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+tr:nth-child(even) { background-color: #f9f9f9; }
+tr:hover { background-color: #f1f7fd; }
 
-tr:hover {
-    background-color: #f1f7fd;
-}
-
+/* Формы */
 input[type="text"],
 input[type="email"],
-textarea {
+textarea, select {
     width: 100%;
     padding: 0.8rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
     border: 1px solid #ccc;
     border-radius: 6px;
     font-family: inherit;
-    transition: border-color 0.3s ease;
+    background-color: var(--color-surface);
+    transition: all var(--transition-speed) ease;
 }
 
-input[type="text"]:focus,
-textarea:focus {
-    border-color: #4A90E2;
+input:focus, textarea:focus, select:focus {
+    border-color: var(--color-primary);
     outline: none;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    transform: scale(1.01);
 }
 
 button,
 input[type="submit"] {
-    background-color: #4A90E2;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
     padding: 0.8rem 2rem;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: all var(--transition-speed) ease;
 }
 
 button:hover,
 input[type="submit"]:hover {
-    background-color: #357ABD;
+    background-color: var(--color-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
+/* Футер */
 #main-footer {
     text-align: center;
-    padding: 2rem;
-    background-color: #333333;
-    color: #ffffff;
-    margin-top: 4rem;
+    padding: var(--spacing-lg);
+    background-color: var(--color-text);
+    color: var(--color-surface);
+    margin-top: auto;
 }
 
+/* Кнопка вверх */
 .btn-up {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: #4A90E2;
+    background-color: var(--color-primary);
     color: white;
     width: 45px;
     height: 45px;
@@ -321,101 +411,68 @@ input[type="submit"]:hover {
     text-decoration: none;
     font-size: 1.2rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: opacity 0.3s, transform 0.3s;
     z-index: 1000;
+    animation: pulse 2s infinite;
+    transition: all 0.3s ease;
 }
 
 .btn-up:hover {
-    background-color: #357ABD;
-    transform: translateY(-5px);
-}
-.contact-info {
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
+    background-color: var(--color-secondary);
+    transform: translateY(-5px) scale(1.1);
+    animation: none;
 }
 
-.contact-info a {
-    color: #4A90E2;
-    text-decoration: none;
-    transition: color 0.3s ease;
+/* Адаптивность */
+@media (min-width: 768px) {
+    .card { padding: 2.5rem; }
+    .hamburger { display: none; }
+    .menu {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        width: auto;
+    }
 }
 
-.contact-info a:hover {
-    color: #357ABD;
-    text-decoration: underline;
-}
+@media (min-width: 1024px) {
+    .page {
+        grid-template-areas:
+            "header header"
+            "sidebar content"
+            "footer footer";
+        grid-template-columns: 250px 1fr;
+        gap: var(--spacing-lg);
+    }
 
-.contact-form label {
-    display: block;
-    font-weight: 600;
-    color: #555555;
-    margin-bottom: 0.3rem;
-}
 
-select {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-    background-color: #ffffff;
-    color: inherit;
-}
+    .page:not(:has(aside)) {
+        grid-template-areas:
+            "header"
+            "content"
+            "footer";
+        grid-template-columns: 1fr;
 
-select:focus {
-    border-color: #4A90E2;
-    outline: none;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
-}
+    main {
+        grid-area: content;
+        padding: 0 var(--spacing-lg);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-fieldset {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    background-color: hsl(220, 30%, 99%);
-}
+    .card {
+        margin: var(--spacing-lg) auto;
+        width: 100%;
+        max-width: 850px;
+    }
 
-legend {
-    font-weight: 600;
-    color: #4A90E2;
-    padding: 0 1rem;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-.radio-title {
-    font-weight: 600;
-    color: #555555;
-    margin-bottom: 0.5rem;
-}
-
-.radio-group,
-.checkbox-group {
-    margin-bottom: 1.5rem;
-}
-
-.radio-group label,
-.checkbox-group label {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 400;
-    margin-right: 1.5rem;
-    cursor: pointer;
-}
-
-.radio-group input[type="radio"],
-.checkbox-group input[type="checkbox"] {
-    margin-right: 0.5rem;
-    transform: scale(1.2);
-    accent-color: #4A90E2;
-    cursor: pointer;
-}
-
-.checkbox-group {
-    margin-top: -0.5rem;
+    aside {
+        grid-area: sidebar;
+        padding-left: 5%;
+        animation: fadeIn 1s ease-out;
+    }
 }
